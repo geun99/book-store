@@ -7,7 +7,7 @@ interface Props {
 
 const InputText = React.forwardRef(
   ({ placeholder }: Props, ref: ForwardedRef<HTMLInputElement>) => {
-    return <InputTextStyle placeholder={placeholder} />;
+    return <InputTextStyle placeholder={placeholder} ref={ref} />;
   }
 );
 
