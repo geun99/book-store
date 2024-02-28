@@ -2,14 +2,14 @@ export interface Book {
   id: number;
   title: string;
   img: number;
-  category_id: number;
+  categoryId: number;
   form: string;
   isbn: string;
   summary: string;
   detail: string;
   author: string;
   pages: number;
-  conents: string;
+  contents: string;
   price: number;
   likes: number;
   pubDate: string;

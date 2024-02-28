@@ -1,7 +1,8 @@
+/* eslint-disable testing-library/no-node-access */
 import { render, screen } from "@testing-library/react";
 
 import Title from "./Title";
-import { BookStoreThemeProvider } from "../../Context/themeContext";
+import { BookStoreThemeProvider } from "../../context/themeContext";
 
 describe("Title 컴포넌트 테스트", () => {
   it("렌더를 확인", () => {
