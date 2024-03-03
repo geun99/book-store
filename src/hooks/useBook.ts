@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
-import { BookDetail } from "../models/book.model";
+import {
+  BookDetail,
+  BookReviewItem,
+  BookReviewItemWrite,
+} from "../models/book.model";
 import { fetchBook, likeBook, unlikeBook } from "../api/books.api";
 import { useAuthStore } from "../store/authStore";
 import { useAlert } from "./useAlert";
 import { addCart } from "../api/carts.api";
+import { addBookReview, fetchBookReview } from "@/api/review.api";
+import { useToast } from "./useToast";
 
 export const useBook = (bookId: string | undefined) => {
   const [cartAdded, setCartAdded] = useState(false);
   const [book, setBook] = useState<BookDetail | null>(null);
+  const [reviews, setReviews] = useState<BookReviewItem[]>([]);
+
   const { isloggedIn } = useAuthStore();
   const { showAlert } = useAlert();
+  const { showToast } = useToast();
+
   const likeToggle = () => {
     //권한 확인
     if (!isloggedIn) {
@@ -26,6 +36,7 @@ export const useBook = (bookId: string | undefined) => {
           liked: false,
           likes: book.likes - 1,
         });
+        showToast("좋아요 취소 완료", "info");
       });
     } else {
       //언라이크 상태 => 라이크 실행
@@ -58,7 +69,22 @@ export const useBook = (bookId: string | undefined) => {
     fetchBook(bookId).then((book) => {
       setBook(book);
     });
+
+    fetchBookReview(bookId).then((reviews) => {
+      setReviews(reviews);
+    });
   }, [bookId]);
 
-  return { book, likeToggle, addToCart, cartAdded };
+  const addReview = async (data: BookReviewItemWrite) => {
+    if (!book) return;
+
+    await addBookReview(book.id.toString(), data).then((res) => {
+      // fetchBookReview(book.id.toString()).then((reviews) => {
+      //   setReviews(reviews);
+      // });
+      showAlert(res.message);
+    });
+  };
+
+  return { book, likeToggle, addToCart, cartAdded, reviews, addReview };
 };

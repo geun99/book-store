@@ -4,7 +4,7 @@ import InputText from "../components/common/InputText";
 import Button from "../components/common/Button";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useAuth } from "@/hooks/uesAuth";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface SignupProps {
   email: string;
