@@ -4,14 +4,10 @@ import BooksFilter from "../components/books/BooksFilter";
 import BooksList from "../components/books/BooksList";
 import BooksEmpty from "../components/books/BooksEmpty";
 import BooksViewSwitcher from "../components/books/BooksViewSwitcher";
-import Pagination from "../components/books/Pagination";
-import { useBooks } from "../hooks/useBooks";
 import Loading from "@/components/common/Loading";
 import { useBooksInfinite } from "@/hooks/useBooksInfinite";
 import Button from "@/components/common/Button";
-import { useEffect, useRef } from "react";
 import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
-import { en } from "@faker-js/faker";
 
 const Books = () => {
   const {
@@ -22,24 +18,6 @@ const Books = () => {
     fetchNextPage,
     hasNextPage,
   } = useBooksInfinite();
-
-  // const moreRef = useRef(null);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver((entries) => {
-  //     entries.forEach((entry) => {
-  //       if (entry.isIntersecting) {
-  //         loadMore();
-  //         observer.unobserve(entry.target);
-  //       }
-  //     });
-  //   });
-
-  //   if (moreRef.current) {
-  //     observer.observe(moreRef.current);
-  //   }
-  //   return () => observer.disconnect();
-  // }, [books, moreRef]);
 
   const moreRef = useIntersectionObserver(([entry]) => {
     if (entry.isIntersecting) {

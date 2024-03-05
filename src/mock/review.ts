@@ -1,6 +1,7 @@
 import { BookReviewItem } from "@/models/book.model";
 import { HttpResponse, http } from "msw";
 import { fakerKO as faker } from "@faker-js/faker";
+import { requestHandler } from "@/api/http";
 
 const mockReviewData: BookReviewItem[] = Array.from({ length: 8 }).map(
   (_, index) => ({
@@ -32,3 +33,13 @@ export const addReview = http.post(
     );
   }
 );
+
+export const reviewForMain = http.get("http://localhost:9999/reviews", () => {
+  return HttpResponse.json(mockReviewData, {
+    status: 200,
+  });
+});
+
+export const fetchReviewAll = async () => {
+  return await requestHandler<BookReviewItem[]>("get", "/reviews");
+};
